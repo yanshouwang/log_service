@@ -1,17 +1,15 @@
 name: log_service
-description: A starting point for Dart libraries or applications.
+description: A Dart package for simplify the usage of the official `logging` package.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/yanshouwang/log_service
 
 environment:
-  sdk: ^3.1.5
+  sdk: '>=3.0.0 <4.0.0'
 
-# Add regular dependencies here.
 dependencies:
   ansicolor: ^2.0.2
   logging: ^1.2.0
-  # path: ^1.8.0
 
 dev_dependencies:
-  lints: ^2.0.0
+  lints: ^3.0.0
   test: ^1.21.0

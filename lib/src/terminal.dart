@@ -3,6 +3,21 @@ import 'dart:async';
 import 'package:ansicolor/ansicolor.dart';
 import 'package:logging/logging.dart';
 
+import 'terminal_stub.dart'
+    if (dart.library.html) 'terminal_html.dart'
+    if (dart.library.io) 'terminal_io.dart';
+
+/// The terminal instance.
+final terminal = Terminal._();
+
+/// Terminal class.
+abstract class Terminal {
+  factory Terminal._() => createTerminal();
+
+  /// Writes object to the terminal.
+  void write(Object object);
+}
+
 /// Emit a log event to terminal.
 ///
 /// This function was designed to map closely to the logging information
@@ -17,7 +32,7 @@ import 'package:logging/logging.dart';
 /// - [zone] (optional) the zone where the log was emitted
 /// - [error] (optional) an error object associated with this log event
 /// - [stackTrace] (optional) a stack trace associated with this log event
-void logWithTerminal(
+void logToTerminal(
   String message, {
   DateTime? time,
   int? sequenceNumber,
@@ -28,26 +43,33 @@ void logWithTerminal(
   StackTrace? stackTrace,
 }) {
   final sb = StringBuffer();
-  final leveledMessage = _levelMessage(message, level);
-  sb.write(leveledMessage);
+  time ??= DateTime.now();
+  final title = '[$time: $name -> ${level.name}]';
+  final leveledTitle = _levelValue(
+    title,
+    level: level,
+  );
+  sb.write(leveledTitle);
+  final leveledMessage = _levelValue(
+    message,
+    level: level,
+  );
+  sb.write('\n$leveledMessage');
   if (error != null) {
-    final leveledError = _levelMessage('$error', level);
+    final leveledError = _levelValue(
+      '$error',
+      level: level,
+    );
     sb.write('\n$leveledError');
   }
-  if (error != null) {
-    final leveledStackTrace = _levelMessage('$stackTrace', level);
+  if (stackTrace != null) {
+    final leveledStackTrace = _levelValue(
+      '$stackTrace',
+      level: level,
+    );
     sb.write('\n$leveledStackTrace');
   }
-  print(
-    '$sb',
-    // time: time,
-    // sequenceNumber: sequenceNumber,
-    // level: level.value,
-    // name: name,
-    // zone: zone,
-    // error: error,
-    // stackTrace: stackTrace,
-  );
+  terminal.write('$sb');
 }
 
 List<int> get _finestColors {
@@ -89,79 +111,85 @@ List<int> get _shoutColors => [13];
 
 int _xtermColor(int r, int g, int b) => r * 36 + g * 6 + b + 16;
 
-String _levelMessage(String message, Level level) {
-  final String leveledMessage;
+String _levelValue(
+  String value, {
+  required Level level,
+}) {
+  final String leveledValue;
   final pen = AnsiPen();
   switch (level) {
     case Level.FINEST:
-      leveledMessage = pen.writeWithColors(
-        message,
+      leveledValue = pen.writeWithColors(
+        value,
         colors: _finestColors,
       );
       break;
     case Level.FINER:
-      leveledMessage = pen.writeWithColors(
-        message,
+      leveledValue = pen.writeWithColors(
+        value,
         colors: _finerColors,
       );
       break;
     case Level.FINE:
-      leveledMessage = pen.writeWithColors(
-        message,
+      leveledValue = pen.writeWithColors(
+        value,
         colors: _fineColors,
       );
       break;
     case Level.CONFIG:
-      leveledMessage = pen.writeWithColors(
-        message,
+      leveledValue = pen.writeWithColors(
+        value,
         colors: _configColors,
       );
       break;
     case Level.INFO:
-      leveledMessage = pen.writeWithColors(
-        message,
+      leveledValue = pen.writeWithColors(
+        value,
         colors: _infoColors,
       );
       break;
     case Level.WARNING:
-      leveledMessage = pen.writeWithColors(
-        message,
+      leveledValue = pen.writeWithColors(
+        value,
         colors: _warningColors,
       );
       break;
     case Level.SEVERE:
-      leveledMessage = pen.writeWithColors(
-        message,
+      leveledValue = pen.writeWithColors(
+        value,
         colors: _severeColors,
       );
       break;
     case Level.SHOUT:
-      leveledMessage = pen.writeWithColors(
-        message,
+      leveledValue = pen.writeWithColors(
+        value,
         colors: _shoutColors,
       );
       break;
     default:
-      leveledMessage = message;
+      leveledValue = pen.writeWithColors(
+        value,
+        colors: [],
+      );
       break;
   }
-  return leveledMessage;
+  return leveledValue;
 }
 
 extension on AnsiPen {
   String writeWithColors(
-    String message, {
+    String value, {
     required List<int> colors,
   }) {
     if (colors.isEmpty) {
-      return write(message);
+      return write(value);
     }
     final color = colors.singleOrNull;
     if (color != null) {
       xterm(color);
-      return write(message);
+      return write(value);
     }
-    return message.splitMapJoin(
+    return value.splitMapJoin(
       RegExp(r'[\r\n]'),
       onMatch: (m) => '${m[0]}',
       onNonMatch: (n) {

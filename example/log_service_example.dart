@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:log_service/log_service.dart';
 
@@ -8,27 +7,18 @@ void main() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen(onRecord);
   final messenger = Messenger();
-  final duration = Duration(seconds: 1);
-  messenger.sayHello(Level.FINEST);
-  sleep(duration);
-  messenger.sayHello(Level.FINER);
-  sleep(duration);
-  messenger.sayHello(Level.FINE);
-  sleep(duration);
-  messenger.sayHello(Level.CONFIG);
-  sleep(duration);
-  messenger.sayHello(Level.INFO);
-  sleep(duration);
-  messenger.sayHello(Level.WARNING);
-  sleep(duration);
-  messenger.sayHello(Level.SEVERE);
-  sleep(duration);
-  messenger.sayHello(Level.SHOUT);
-  sleep(duration);
+  messenger.logMessage(Level.FINEST);
+  messenger.logMessage(Level.FINER);
+  messenger.logMessage(Level.FINE);
+  messenger.logMessage(Level.CONFIG);
+  messenger.logMessage(Level.INFO);
+  messenger.logMessage(Level.WARNING);
+  messenger.logMessage(Level.SEVERE);
+  messenger.logMessage(Level.SHOUT);
 }
 
 void onRecord(LogRecord record) {
-  logWithTerminal(
+  logToTerminal(
     record.message,
     time: record.time,
     sequenceNumber: record.sequenceNumber,
@@ -41,7 +31,7 @@ void onRecord(LogRecord record) {
 }
 
 class Messenger with LogService {
-  void sayHello(Level level) {
+  void logMessage(Level level) {
     switch (level) {
       case Level.FINEST:
         finest('This is a `FINEST` message.');
