@@ -11,29 +11,26 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# log_service
+
+A Dart package for simplify the usage of the official `logging` package.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- LogController
+- LogService
+- Terminal
+- logToTermianl
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add `log_service` as a [dependency in your pubspec.yaml file](https://dart.dev/guides/packages).
+
+```
+dependencies:
+  log_service: ^<latest-version>
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
-```
-
 ## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.

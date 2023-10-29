@@ -4,9 +4,11 @@ import 'package:log_service/log_service.dart';
 
 void main() {
   ansiColorDisabled = false;
+  // hierarchicalLoggingEnabled = true;
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen(onRecord);
   final messenger = Messenger();
+  // messenger.logLevel = Level.WARNING;
   messenger.logMessage(Level.FINEST);
   messenger.logMessage(Level.FINER);
   messenger.logMessage(Level.FINE);
