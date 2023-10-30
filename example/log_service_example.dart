@@ -1,28 +1,30 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:log_service/log_service.dart';
 
 void main() {
-  ansiColorDisabled = false;
+  // hierarchicalLoggingEnabled = true;
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen(onRecord);
-  final messenger = Messenger();
-  messenger.logMessage(Level.FINEST);
-  messenger.logMessage(Level.FINER);
-  messenger.logMessage(Level.FINE);
-  messenger.logMessage(Level.CONFIG);
-  messenger.logMessage(Level.INFO);
-  messenger.logMessage(Level.WARNING);
-  messenger.logMessage(Level.SEVERE);
-  messenger.logMessage(Level.SHOUT);
+  final creator = LogCreator();
+  // creator.logLevel = Level.WARNING;
+  creator.create(Level.FINEST);
+  creator.create(Level.FINER);
+  creator.create(Level.FINE);
+  creator.create(Level.CONFIG);
+  creator.create(Level.INFO);
+  creator.create(Level.WARNING);
+  creator.create(Level.SEVERE);
+  creator.create(Level.SHOUT);
 }
 
 void onRecord(LogRecord record) {
-  logToTerminal(
+  log(
     record.message,
     time: record.time,
     sequenceNumber: record.sequenceNumber,
-    level: record.level,
+    level: record.level.value,
     name: record.loggerName,
     zone: record.zone,
     error: record.error,
@@ -30,43 +32,44 @@ void onRecord(LogRecord record) {
   );
 }
 
-class Messenger with LogService {
-  void logMessage(Level level) {
+class LogCreator with LoggerProvider, LoggerController {
+  void create(Level level) {
+    final message = 'This is a `${level.name}` message';
     switch (level) {
       case Level.FINEST:
-        finest('This is a `FINEST` message.');
+        logger.finest(message);
         break;
       case Level.FINER:
-        finer('This is a `FINER` message.');
+        logger.finer(message);
         break;
       case Level.FINE:
-        fine('This is a `FINE` message.');
+        logger.fine(message);
         break;
       case Level.CONFIG:
-        config('This is a `CONFIG` message.');
+        logger.config(message);
         break;
       case Level.INFO:
-        info('This is a `INFO` message.');
+        logger.info(message);
         break;
       case Level.WARNING:
         try {
-          throw FormatException('This is a `WARNING` message.');
+          throw FormatException(message);
         } catch (error, stackTrace) {
-          warning('$error', error, stackTrace);
+          logger.warning(message, error, stackTrace);
         }
         break;
       case Level.SEVERE:
         try {
-          throw TimeoutException('This is a `SERVER` message.');
+          throw TimeoutException(message);
         } catch (error, stackTrace) {
-          severe('$error', error, stackTrace);
+          logger.severe(message, error, stackTrace);
         }
         break;
       case Level.SHOUT:
         try {
-          throw UnsupportedError('This is a `SHOUT` message.');
+          throw UnsupportedError(message);
         } catch (error, stackTrace) {
-          shout('$error', error, stackTrace);
+          logger.shout(message, error, stackTrace);
         }
         break;
       default:
