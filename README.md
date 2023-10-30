@@ -43,14 +43,14 @@ Listen the `Logger.root.onRecord` stream to get log events.
 
 ### 3. Log Methods
 
-- shout();
-- severe();
-- warning();
-- info();
-- config();
-- fine();
-- finer();
-- finest();
+- logger.shout();
+- logger.severe();
+- logger.warning();
+- logger.info();
+- logger.config();
+- logger.fine();
+- logger.finer();
+- logger.finest();
 
 ## Additional information
 

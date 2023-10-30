@@ -1,6 +1,7 @@
 ## 1.0.0-dev.3
 
 - Downgrade `meta` version to 1.9.1
+- Move methods in `LogService` to `logger` filed.
 
 ## 1.0.0-dev.2
 

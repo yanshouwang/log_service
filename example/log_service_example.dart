@@ -8,7 +8,7 @@ void main() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen(onRecord);
   final creator = LogCreator();
-  // messenger.logLevel = Level.WARNING;
+  // creator.logLevel = Level.WARNING;
   creator.create(Level.FINEST);
   creator.create(Level.FINER);
   creator.create(Level.FINE);
@@ -37,39 +37,39 @@ class LogCreator with LogService {
     final message = 'This is a `${level.name}` message';
     switch (level) {
       case Level.FINEST:
-        finest(message);
+        logger.finest(message);
         break;
       case Level.FINER:
-        finer(message);
+        logger.finer(message);
         break;
       case Level.FINE:
-        fine(message);
+        logger.fine(message);
         break;
       case Level.CONFIG:
-        config(message);
+        logger.config(message);
         break;
       case Level.INFO:
-        info(message);
+        logger.info(message);
         break;
       case Level.WARNING:
         try {
           throw FormatException(message);
         } catch (error, stackTrace) {
-          warning(message, error, stackTrace);
+          logger.warning(message, error, stackTrace);
         }
         break;
       case Level.SEVERE:
         try {
           throw TimeoutException(message);
         } catch (error, stackTrace) {
-          severe(message, error, stackTrace);
+          logger.severe(message, error, stackTrace);
         }
         break;
       case Level.SHOUT:
         try {
           throw UnsupportedError(message);
         } catch (error, stackTrace) {
-          shout(message, error, stackTrace);
+          logger.shout(message, error, stackTrace);
         }
         break;
       default:
