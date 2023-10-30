@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 
 import 'log_controller.dart';
 
@@ -30,6 +31,7 @@ mixin LogService implements LogController {
   /// was made. This can be advantageous if a log listener wants to handler
   /// records of different zones differently (e.g. group log records by HTTP
   /// request if each HTTP request handler runs in it's own zone).
+  @protected
   void log(
     Level logLevel,
     Object? message, [
@@ -43,6 +45,7 @@ mixin LogService implements LogController {
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
+  @protected
   void finest(Object? message, [Object? error, StackTrace? stackTrace]) =>
       log(Level.FINEST, message, error, stackTrace);
 
@@ -50,6 +53,7 @@ mixin LogService implements LogController {
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
+  @protected
   void finer(Object? message, [Object? error, StackTrace? stackTrace]) =>
       log(Level.FINER, message, error, stackTrace);
 
@@ -57,6 +61,7 @@ mixin LogService implements LogController {
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
+  @protected
   void fine(Object? message, [Object? error, StackTrace? stackTrace]) =>
       log(Level.FINE, message, error, stackTrace);
 
@@ -64,6 +69,7 @@ mixin LogService implements LogController {
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
+  @protected
   void config(Object? message, [Object? error, StackTrace? stackTrace]) =>
       log(Level.CONFIG, message, error, stackTrace);
 
@@ -71,6 +77,7 @@ mixin LogService implements LogController {
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
+  @protected
   void info(Object? message, [Object? error, StackTrace? stackTrace]) =>
       log(Level.INFO, message, error, stackTrace);
 
@@ -78,6 +85,7 @@ mixin LogService implements LogController {
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
+  @protected
   void warning(Object? message, [Object? error, StackTrace? stackTrace]) =>
       log(Level.WARNING, message, error, stackTrace);
 
@@ -85,6 +93,7 @@ mixin LogService implements LogController {
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
+  @protected
   void severe(Object? message, [Object? error, StackTrace? stackTrace]) =>
       log(Level.SEVERE, message, error, stackTrace);
 
@@ -92,6 +101,7 @@ mixin LogService implements LogController {
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
+  @protected
   void shout(Object? message, [Object? error, StackTrace? stackTrace]) =>
       log(Level.SHOUT, message, error, stackTrace);
 }
