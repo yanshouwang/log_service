@@ -1,3 +1,9 @@
+## 1.0.0
+
+- Add `LogController` interface.
+- Add `LoggerController` mixin.
+- Add `LoggerProvider` mixin.
+
 ## 1.0.0-dev.4
 
 - Move methods in `LogService` to `logger` filed.

@@ -18,7 +18,8 @@ A Dart package for simplify the usage of the official `logging` package.
 ## Features
 
 - LogController: An interface for controlling the logger instance.
-- LogService: A mixin provides `logging#Logger`'s methods and implements the `LogController` interface, which can be mixed into any class.
+- LoggerController: A mixin implements the `LogController` interface with a `Logger` instance.
+- LoggerProvider: A mixin provides a `Logger` instance, which name is the `runtimeType`.
 
 ## Getting started
 
@@ -35,7 +36,7 @@ dependencies:
 
 The log level is folling the `logging`'s strategy, the `logLevel` is inheirted from the `Logger.root` instance and can only be changed through the `Logger.root` instance by default.
 
-Sets `hierarchicalLoggingEnabled = true` to enable hierarchical logging, then use the `logLevel` of the `LogController` interface to set log level for each `LogSerivice`.
+Sets `hierarchicalLoggingEnabled = true` to enable hierarchical logging, then use the `logLevel` of the `LogController` interface to set log level for a specific logger instance.
 
 ### 2. Log Events
 

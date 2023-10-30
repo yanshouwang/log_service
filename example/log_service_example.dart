@@ -32,7 +32,7 @@ void onRecord(LogRecord record) {
   );
 }
 
-class LogCreator with LogService {
+class LogCreator with LoggerProvider, LoggerController {
   void create(Level level) {
     final message = 'This is a `${level.name}` message';
     switch (level) {

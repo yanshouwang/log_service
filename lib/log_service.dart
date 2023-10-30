@@ -4,4 +4,5 @@ library;
 export 'package:logging/logging.dart';
 
 export 'src/log_controller.dart';
-export 'src/log_service.dart';
+export 'src/logger_controller.dart';
+export 'src/logger_provider.dart';
