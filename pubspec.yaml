@@ -1,6 +1,6 @@
 name: log_service
 description: A Dart package for simplify the usage of the official `logging` package.
-version: 1.0.0-dev.2
+version: 1.0.0-dev.3
 repository: https://github.com/yanshouwang/log_service
 
 environment:
