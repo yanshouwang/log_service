@@ -1,3 +1,7 @@
+## 1.0.0-dev.3
+
+- Downgrade `meta` version to 1.9.1
+
 ## 1.0.0-dev.2
 
 - Remove `Terminal` API.
